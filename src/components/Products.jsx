@@ -7,6 +7,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 import { Link } from "react-router-dom";
 
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import { Button } from "@mui/material";
+
 const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
@@ -72,15 +75,15 @@ const Products = () => {
   const ShowProducts = () => {
     return (
       <>
-        <div className="buttons text-center py-5">
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => setFilter(data)}>All</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("men's clothing")}>Men's Clothing</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("women's clothing")}>
+        <Breadcrumbs aria-label="breadcrumb" style={{margin: '25px 0', color: '#000'}}>
+          <Button style={{color: '#000'}}  onClick={() => setFilter(data)}>All</Button>
+          <Button style={{color: '#000'}} onClick={() => filterProduct("men's clothing")}>Men's Clothing</Button>
+          <Button style={{color: '#000'}} onClick={() => filterProduct("women's clothing")}>
             Women's Clothing
-          </button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("jewelery")}>Jewelery</button>
-          <button className="btn btn-outline-dark btn-sm m-2" onClick={() => filterProduct("electronics")}>Electronics</button>
-        </div>
+          </Button>
+          <Button style={{color: '#000'}} onClick={() => filterProduct("jewelery")}>Jewelery</Button>
+          <Button style={{color: '#000'}} onClick={() => filterProduct("electronics")}>Electronics</Button>
+        </Breadcrumbs>
 
         {filter.map((product) => {
           return (
@@ -109,7 +112,9 @@ const Products = () => {
                   <Link to={"/product/" + product.id} className="btn btn-dark m-1">
                     Buy Now
                   </Link>
-                  <button className="btn btn-dark m-1" onClick={() => addProduct(product)}>
+                  <button className="btn btn-dark m-1" onClick={() => 
+                  { window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+                    addProduct(product)}}>
                     Add to Cart
                   </button>
                 </div>

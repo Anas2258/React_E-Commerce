@@ -7,6 +7,8 @@ import { addCart } from "../redux/action";
 
 import { Footer, Navbar } from "../components";
 
+import { Button, ButtonGroup } from "@mui/material";
+
 const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
@@ -19,7 +21,7 @@ const Product = () => {
   const addProduct = (product) => {
     dispatch(addCart(product));
   };
-
+  
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true);
@@ -35,6 +37,7 @@ const Product = () => {
       setSimilarProducts(data2);
       setLoading2(false);
     };
+    window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
     getProduct();
   }, [id]);
 
@@ -86,7 +89,11 @@ const Product = () => {
               <p className="lead">{product.description}</p>
               <button
                 className="btn btn-outline-dark"
-                onClick={() => addProduct(product)}
+                onClick={() => {
+                  window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+                  addProduct(product);
+                }
+                }
               >
                 Add to Cart
               </button>
