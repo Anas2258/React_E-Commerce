@@ -14,8 +14,6 @@ import {
   Popper,
   Fade,
   Slide,
-  Tabs,
-  Tab,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
@@ -25,17 +23,6 @@ import LogoDevIcon from "@mui/icons-material/LogoDev";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function LinkTab(props) {
-  return (
-    <Tab
-      component={Link}
-      // onClick={(event) => {
-      //   event.preventDefault();
-      // }}
-      {...props}
-    />
-  );
-}
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -75,7 +62,7 @@ const Navbar = () => {
   const id = canBeOpen ? "transition-popper" : undefined;
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="static" elevation={0}>
         <Container
           maxWidth="xl"
           sx={{ backgroundColor: "#fff", color: "#000" }}
@@ -183,29 +170,29 @@ const Navbar = () => {
               FreshCodes
             </Typography>
             <Box sx={{ flexGrow: 18, display: { xs: "none", md: "flex" } }}>
-              <Tabs
+              {/* <Tabs
                 onChange={handleChange}
-                value={tabValue}
+                // value={tabValue}
                 aria-label="Navigation"
                 indicatorColor="primary"
                 textColor="primary"
                 variant='scrollable'
-                scrollButtons='on'
-              >
-                <Tab
+                // scrollButtons='on'
+              > */}
+                <Button
                   sx={{
                     color: "#000",
                     fontFamily: "monospace",
                     letterSpacing: ".1rem",
                   }}
                   label="Home"
-                  tabValue={0}
+                  // tabValue={0}
                   component={Link}
                   to="/"
-                />
-                {/* Home
-              </Tab> */}
-                <Tab
+                >
+                Home
+              </Button>
+                <Button
                   sx={{
                     color: "#000",
                     fontFamily: "monospace",
@@ -215,10 +202,10 @@ const Navbar = () => {
                   // tabValue={1}
                   component={Link}
                   to="/product"
-                />
-                {/* Products
-              </Tab> */}
-                <Tab
+                >
+                Products
+              </Button>
+                <Button
                   sx={{
                     color: "#000",
                     fontFamily: "monospace",
@@ -228,10 +215,10 @@ const Navbar = () => {
                   // tabValue={2}
                   component={Link}
                   to="/about"
-                />
-                {/* Products
-              </Tab> */}
-                <Tab
+                >
+                About
+              </Button>
+                <Button
                   sx={{
                     color: "#000",
                     fontFamily: "monospace",
@@ -241,11 +228,11 @@ const Navbar = () => {
                   // tabValue={3}
                   component={Link}
                   to="/contact"
-                />
-                {/* Contact
-              </Tab> */}
+                >
+                Contact
+              </Button>
                 {/* </TabList> */}
-              </Tabs>
+              {/* </Button> */}
             </Box>
             {/* </TabContext> */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
