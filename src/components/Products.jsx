@@ -8,7 +8,8 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 
 import Breadcrumbs from '@mui/material/Breadcrumbs';
-import { Button } from "@mui/material";
+import { Button, Box, Typography } from "@mui/material";
+import Chip from '@mui/material/Chip';
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -75,22 +76,23 @@ const Products = () => {
   const ShowProducts = () => {
     return (
       <>
-        <Breadcrumbs aria-label="breadcrumb" style={{margin: '25px 0', color: '#000'}}>
-          <Button style={{color: '#000'}}  onClick={() => setFilter(data)}>All</Button>
-          <Button style={{color: '#000'}} onClick={() => filterProduct("men's clothing")}>Men's Clothing</Button>
-          <Button style={{color: '#000'}} onClick={() => filterProduct("women's clothing")}>
-            Women's Clothing
-          </Button>
-          <Button style={{color: '#000'}} onClick={() => filterProduct("jewelery")}>Jewelery</Button>
-          <Button style={{color: '#000'}} onClick={() => filterProduct("electronics")}>Electronics</Button>
+      <Box sx={{marginBottom: 5}} >
+        <Breadcrumbs aria-label="breadcrumb" sx={{ display: 'flex', color: '#000', borderRadius: '5px', padding: 0,  flexDirection:{xs:'column', md:'row'}}}>
+          <Chip label='All' style={{color: '#000',fontSize: '1rem', fontFamily: "monospace", margin:5 }}  onClick={() => setFilter(data)}/>
+          <Chip label="Men's Clothing" style={{color: '#000',fontSize: '1rem', fontFamily: "monospace", margin:5 }} onClick={() => filterProduct("men's clothing")} />
+          <Chip label="Women's Clothing" style={{color: '#000',fontSize: '1rem',  fontFamily: "monospace", margin:5 }} onClick={() => filterProduct("women's clothing")} />
+            {/* Women's Clothing
+          </Chip> */}
+          <Chip label="Jewellary" style={{color: '#000',fontSize: '1rem',  fontFamily: "monospace", margin:5 }} onClick={() => filterProduct("jewelery")}/>
+          <Chip label="Electronics" style={{color: '#000',fontSize: '1rem',  fontFamily: "monospace", margin:5 }} onClick={() => filterProduct("electronics")}/>
         </Breadcrumbs>
-
+      </Box>
         {filter.map((product) => {
           return (
             <div id={product.id} key={product.id} className="col-md-4 col-sm-6 col-xs-8 col-12 mb-4">
               <div className="card text-center h-100" key={product.id}>
                 <img
-                  className="card-img-top p-3"
+                  className="card-img-top p-5"
                   src={product.image}
                   alt="Card"
                   height={300}
@@ -130,10 +132,10 @@ const Products = () => {
     <>
       <div className="container my-3 py-3">
         <div className="row">
-          <div className="col-12">
-            <h2 className="display-5 text-center">Latest Products</h2>
+          {/* <div className="col-12"> */}
+            <Typography fontFamily="monospace" variant="h4" gutterBottom>Latest Products</Typography>
             <hr />
-          </div>
+          {/* </div> */}
         </div>
         <div className="row justify-content-center">
           {loading ? <Loading /> : <ShowProducts />}

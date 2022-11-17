@@ -10,15 +10,13 @@ import {
   Box,
   Button,
   Tooltip,
-  Avatar,
   Badge,
   Popper,
   Fade,
   Slide,
-  AvatarGroup,
+  Tabs,
+  Tab,
 } from "@mui/material";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -27,42 +25,23 @@ import LogoDevIcon from "@mui/icons-material/LogoDev";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
+function LinkTab(props) {
   return (
-    <Typography
-      component="div"
-      role="tabpanel"
-      hidden={value !== index}
-      id={`scrollable-auto-tabpanel-${index}`}
-      aria-labelledby={`scrollable-auto-tab-${index}`}
-      {...other}
-    >
-      <Box p={3}>{children}</Box>
-    </Typography>
+    <Tab
+      component={Link}
+      // onClick={(event) => {
+      //   event.preventDefault();
+      // }}
+      {...props}
+    />
   );
 }
-
-// TabPanel.propTypes = {
-//   children: PropTypes.node,
-//   index: PropTypes.any.isRequired,
-//   value: PropTypes.any.isRequired,
-// };
-
-function a11yProps(index) {
-  return {
-    id: `scrollable-auto-tab-${index}`,
-    "aria-controls": `scrollable-auto-tabpanel-${index}`,
-  };
-}
-
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [value, setValue] = React.useState(0);
+  const [tabValue, setValue] = React.useState(0);
 
   const state = useSelector((state) => state.handleCart);
 
@@ -87,9 +66,10 @@ const Navbar = () => {
     setOpen((previousOpen) => !previousOpen);
   };
 
-  function handleChange(event, newValue) {
+  const handleChange = (event, newValue) => {
+    console.log(newValue);
     setValue(newValue);
-  }
+  };
 
   const canBeOpen = open && Boolean(anchorEl);
   const id = canBeOpen ? "transition-popper" : undefined;
@@ -123,18 +103,6 @@ const Navbar = () => {
             >
               FreshCodes
             </Typography>
-            {/* </NavLink> */}
-            {/* <button
-            className="navbar-toggler mx-2"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button> */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
               <IconButton
                 size="large"
@@ -214,68 +182,72 @@ const Navbar = () => {
             >
               FreshCodes
             </Typography>
-            <Box
-
-              sx={{ flexGrow: 18, display: { xs: "none", md: "flex" } }}
-            > 
-          {/* <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
-          <Tab label="Item Four" {...a11yProps(3)} /> */}
-              {/* <ul className="navbar-nav m-auto my-2 text-center"> */}
-              <Button
-                sx={{
-                  color: "#000",
-                  fontFamily: "monospace",
-                  letterSpacing: ".1rem",
-                }}
-                component={Link}
-                to="/"
-                {...a11yProps(0)}
+            <Box sx={{ flexGrow: 18, display: { xs: "none", md: "flex" } }}>
+              <Tabs
+                onChange={handleChange}
+                value={tabValue}
+                aria-label="Navigation"
+                indicatorColor="primary"
+                textColor="primary"
+                variant='scrollable'
+                scrollButtons='on'
               >
-                Home
-              </Button>
-              <Button
-                sx={{
-                  color: "#000",
-                  fontFamily: "monospace",
-                  letterSpacing: ".1rem",
-                }}
-                component={Link}
-                to="/product"
-                {...a11yProps(1)}
-              >
-                Products
-              </Button>
-              <Button
-                sx={{
-                  color: "#000",
-                  fontFamily: "monospace",
-                  letterSpacing: ".1rem",
-                }}
-                component={Link}
-                to="/about"
-                {...a11yProps(2)}
-              >
-                About
-              </Button>
-              <Button
-                sx={{
-                  color: "#000",
-                  fontFamily: "monospace",
-                  letterSpacing: ".1rem",
-                }}
-                component={Link}
-                to="/contact"
-                {...a11yProps(3)}
-              >
-                Contact
-              </Button>
-              {/* <li className="nav-item">
-                            <NavLink className="nav-link" to="/components">Components</NavLink>
-                    </li> */}
-              {/* </ul> */}
+                <Tab
+                  sx={{
+                    color: "#000",
+                    fontFamily: "monospace",
+                    letterSpacing: ".1rem",
+                  }}
+                  label="Home"
+                  tabValue={0}
+                  component={Link}
+                  to="/"
+                />
+                {/* Home
+              </Tab> */}
+                <Tab
+                  sx={{
+                    color: "#000",
+                    fontFamily: "monospace",
+                    letterSpacing: ".1rem",
+                  }}
+                  label="Products"
+                  // tabValue={1}
+                  component={Link}
+                  to="/product"
+                />
+                {/* Products
+              </Tab> */}
+                <Tab
+                  sx={{
+                    color: "#000",
+                    fontFamily: "monospace",
+                    letterSpacing: ".1rem",
+                  }}
+                  label="About"
+                  // tabValue={2}
+                  component={Link}
+                  to="/about"
+                />
+                {/* Products
+              </Tab> */}
+                <Tab
+                  sx={{
+                    color: "#000",
+                    fontFamily: "monospace",
+                    letterSpacing: ".1rem",
+                  }}
+                  label="Contact"
+                  // tabValue={3}
+                  component={Link}
+                  to="/contact"
+                />
+                {/* Contact
+              </Tab> */}
+                {/* </TabList> */}
+              </Tabs>
             </Box>
+            {/* </TabContext> */}
             <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "flex" } }}>
               <IconButton
                 onClick={handleClick}
@@ -302,7 +274,12 @@ const Navbar = () => {
                       unmountOnExit
                     >
                       <Box
-                        sx={{ border: 1, p: 1, bgcolor: "background.paper" }}
+                        sx={{
+                          borderRadius: 5,
+                          p: 1,
+                          bgcolor: "background.paper",
+                          border: "1px solid #000",
+                        }}
                       >
                         <Cart />
                       </Box>
@@ -335,15 +312,17 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem>
-                <NavLink
-                to="/login"
-                style={{ color: '#000', textDecoration: 'none' }}
-              >
+                  <NavLink
+                    to="/login"
+                    style={{ color: "#000", textDecoration: "none" }}
+                  >
                     <i className="fa fa-sign-in-alt mr-1"></i> Login
                   </NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/register" style={{ color: '#000', textDecoration: 'none' }}>
+                  <NavLink
+                    to="/register"
+                    style={{ color: "#000", textDecoration: "none" }}>
                     <i className="fa fa-user-plus mr-1"></i> Register
                   </NavLink>
                 </MenuItem>

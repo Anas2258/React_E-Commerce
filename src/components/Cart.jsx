@@ -4,6 +4,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCart, delCart } from "../redux/action";
 import { Link } from "react-router-dom";
 
+import Box from '@mui/material/Box';
+import { Card, CardActions, CardContent, Typography, Button } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
 const Cart = ( {handleClick}) => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
@@ -15,16 +20,30 @@ const Cart = ( {handleClick}) => {
 
   const EmptyCart = () => {
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col-md-12 py-5 bg-light text-center">
-            <h4 className="p-3 display-5">Your Cart is Empty</h4>
-            <Link to="/product" className="btn  btn-outline-dark mx-4">
-              <i className="fa fa-arrow-left"></i> Continue Shopping
-            </Link>
-          </div>
-        </div>
-      </div>
+        // <div className="container">
+        //   <div className="row">
+        //     <div className="col-md-12 py-5 bg-light text-center">
+        //       <h4 className="p-3 display-5">Your Cart is Empty</h4>
+        //       <Link to="/product" className="btn  btn-outline-dark mx-4">
+        //         <i className="fa fa-arrow-left"></i> Continue Shopping
+        //       </Link>
+        //     </div>
+        //   </div>
+        // </div>
+      
+      <Card sx={{ minWidth: 275, padding: '1.5rem'}} elevation = '15'>
+        <CardContent>
+          {/* <ShoppingCartIcon /> */}
+          <Typography fontFamily="monospace" variant="h4" gutterBottom>
+            Your Cart is Empty
+          </Typography>
+          <CardActions>
+          <Button size='normal' sx={{ backgroundColor:'#eeeeee', color: '#000', fontFamily: 'monospace' }}>
+            <ArrowBackIcon /> Continue Shopping
+          </Button>
+          </CardActions>
+        </CardContent>
+      </Card>
     );
   };
 
@@ -49,13 +68,13 @@ const Cart = ( {handleClick}) => {
     return (
       <>
         <section className="h-100 gradient-custom">
-          <div className="container">
-            <div className="row d-flex justify-content-center my-4">
-              <div className="col-md-10">
-                <div className="card mb-4">
-                  <div className="card-header py-3">
+          <div className="container" >
+            <div className="row d-flex justify-content-center my-4" >
+              <div className="col-md-10" >
+                <div className="card mb-4" >
+                  {/* <div className="card-header py-3">
                     <h5 className="mb-0">Item List</h5>
-                  </div>
+                  </div> */}
                   <div className="card-body">
                     {state.map((item) => {
                       return (
@@ -78,7 +97,7 @@ const Cart = ( {handleClick}) => {
 
                             <div className="col-lg-5 col-md-6">
                               <p>
-                                <strong>{item.title}</strong>
+                                <strong>{item.title.substring(0, 32)}...</strong>
                               </p>
                               {/* <p>Color: blue</p>
                               <p>Size: M</p> */}
@@ -175,7 +194,7 @@ const Cart = ( {handleClick}) => {
     <>
       <div className="container my-3">
         {/* <button onClick={handleClick}>Close</button> */}
-        <h1 className="text-center">Cart</h1>
+        <Typography variant="h4" textAlign='center' fontFamily="monospace" fontWeight={400}>Cart</Typography>
         <hr />
         {state.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>
