@@ -9,7 +9,7 @@ import { Card, CardActions, CardContent, Typography, Button } from "@mui/materia
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-const Cart = ( {handleClick}) => {
+const Cart = ( {setCartItemsCount}) => {
   const state = useSelector((state) => state.handleCart);
   const dispatch = useDispatch();
 
@@ -30,10 +30,10 @@ const Cart = ( {handleClick}) => {
         //     </div>
         //   </div>
         // </div>
-      <Card sx={{ minWidth: 275, padding: '1.5rem'}} elevation = '15'>
+      <Card sx={{ minWidth: 275, padding: '1.5rem'}} elevation = {15}>
         <CardContent>
           {/* <ShoppingCartIcon /> */}
-          <Typography fontFamily="monospace" variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Your Cart is Empty
           </Typography>
           <CardActions>
@@ -56,11 +56,15 @@ const Cart = ( {handleClick}) => {
     let subtotal = 0;
     let shipping = 30.0;
     let totalItems = 0;
+
     state.map((item) => {
       return (subtotal += item.price * item.qty);
     });
 
+    setCartItemsCount(state.length)
     state.map((item) => {
+      // console.log(item, 'item')
+      // setCartItemsCount(item)
       return (totalItems += item.qty);
     });
     return (
@@ -68,8 +72,7 @@ const Cart = ( {handleClick}) => {
         <section className="h-100 gradient-custom">
           <div className="container" >
             <div className="row d-flex justify-content-center my-4" >
-              <div className="col-md-10" >
-              <Typography textAlign='right'><strong>Subtotal = ${Math.round(subtotal)}</strong></Typography>
+              <div className="col-md-12" >
                 <div className="card mb-4" >
                   {/* <div className="card-header py-3">
                     <h5 className="mb-0">Item List</h5>
@@ -94,7 +97,7 @@ const Cart = ( {handleClick}) => {
                             </div>
                             <div className="col-lg-5 col-md-6">
                               <p>
-                                <strong>{item.title.substring(0, 32)}...</strong>
+                                {item.title.substring(0, 32)}...
                               </p>
                             </div>
                             <div className="col-lg-4 col-md-6">
@@ -129,12 +132,15 @@ const Cart = ( {handleClick}) => {
                         </div>
                       );
                     })}
-                      <Link
+                    <Typography textAlign='center' margin="1rem 0">Subtotal = <span style={{color: 'red', fontWeight: '600'}}>${Math.round(subtotal)}</span></Typography>
+                      <Button
+                      component={Link}
                       to="/checkout"
-                      className="btn btn-dark btn-lg btn-block"
+                      fullWidth={true}
+                      sx={{ background: '#00a524', color: '#fff' }}
                     >
                       Go to checkout
-                    </Link>
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -181,8 +187,8 @@ const Cart = ( {handleClick}) => {
     <>
       <div className="container my-3">
         {/* <button onClick={handleClick}>Close</button> */}
-        <Typography variant="h4" textAlign='center' fontFamily="monospace" fontWeight={400}>Cart</Typography>
-        <hr />
+        {/* <Typography variant="h4" textAlign='center' fontFamily="monospace" fontWeight={400}>Cart</Typography>
+        <hr /> */}
         {state.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>
       {/* <Footer /> */}

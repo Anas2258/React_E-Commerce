@@ -1,11 +1,15 @@
 import React, { useState } from "react";
+import { Box } from "@mui/material";
 import "swiper/css";
 import "swiper/css/navigation";
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
 const Home = () => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(0);  
+  
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -20,8 +24,9 @@ const Home = () => {
   return (
     <>
       {/* <div className="hero border-1 pb-3"> */}
-      <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
-        <SwiperSlide>
+      <Swiper z-index = "999" style={{ maxHeight: "28rem" }} pagination={{ clickable: true }}
+      scrollbar={{ draggable: true }} mousewheel={true} navigation={true} modules={[Navigation]} autoHeight={true} className="mySwiper">
+        <SwiperSlide >
           <div className="card bg-dark text-white border-0 ">
             <img
               className="card-img img-fluid"
@@ -44,14 +49,15 @@ const Home = () => {
           </div>
           </SwiperSlide>
           <SwiperSlide>
-          <div className="card bg-dark text-white border-0 ">
+          {/* <div className="card bg-dark text-white border-0 "> */}
             <img
               className="card-img img-fluid"
-              src="./assets/main.png.jpg"
+              src="./assets/photo.avif"
               alt="Card"
-              height={500}
+              // height={500}
+              style={{objectFit: 'cover'}}
             />
-            </div>
+            {/* </div> */}
           </SwiperSlide>
         </Swiper>
       {/* </div> */}
