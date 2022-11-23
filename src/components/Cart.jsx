@@ -5,10 +5,25 @@ import { addCart, delCart } from "../redux/action";
 import { Link } from "react-router-dom";
 
 import Box from '@mui/material/Box';
-import { Card, CardActions, CardContent, Typography, Button } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { Card, CardActions, CardContent, Typography, Button, IconButton, Stack, CardMedia } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  backgroundColor: '#ff8100', 
+  fontFamily:'unset',
+  color: "#fff", 
+  fontWeight:400,
+  '&:hover': {
+    backgroundColor: '#ff8100',
+    color:'#fff'
+ },
+}))
 
 const Cart = ( {setCartItemsCount}) => {
   const state = useSelector((state) => state.handleCart);
@@ -17,15 +32,49 @@ const Cart = ( {setCartItemsCount}) => {
 
   const EmptyCart = () => {
     return (
-      <Card sx={{ minWidth: 275}} elevation = {0}>
-        <CardContent sx={{ padding: 0 }}>
-          <Typography variant="h6" gutterBottom>
-            Your Cart is Empty
-          </Typography>
-          <CardActions sx={{padding: 0 }}>
-          <Button component={Link} to='/product' size='normal' sx={{ backgroundColor:'#0d6efd', color: '#fff', fontFamily: 'monospace'}}>
-            <ArrowBackIcon /> Continue Shopping
-          </Button>
+      <Card sx={{ minWidth: 275, padding: 0 }} elevation={0}>
+        <CardMedia
+          component="img"
+          height="250"
+          image="./assets/cart_empty.png"
+          alt="Card"
+          sx={{ padding: "1rem 0" }}
+        />
+        <CardContent>
+          <Stack direction="column" sx={{ maxWidth: 250 }}>
+            <Typography fontFamily="unset" variant="h6" textAlign="center">
+              Your Cart is Empty
+            </Typography>
+            <Typography
+              fontFamily="unset"
+              variant="body2"
+              textAlign="center"
+              sx={{ color: "#51585e" }}
+            >
+              Looks like your haven't made your menu yet.
+            </Typography>
+          </Stack>
+          <CardActions
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              paddingTop: "1.5rem",
+            }}
+          >
+            <Button
+              component={Link}
+              to="/product"
+              size="normal"
+              sx={{
+                backgroundColor: "#0d6efd",
+                color: "#fff",
+                fontFamily: "unset",
+                padding: "12px 5px",
+              }}
+            >
+              <ArrowBackIcon /> Continue Shopping
+            </Button>
           </CardActions>
         </CardContent>
       </Card>
@@ -69,7 +118,7 @@ const Cart = ( {setCartItemsCount}) => {
                                 data-mdb-ripple-color="light">
                                 <img
                                   src={item.image}
-                                  className="w-100"
+                                  // className="w-100"
                                   alt={item.title}
                                   width={100}
                                   height={75}
@@ -82,25 +131,26 @@ const Cart = ( {setCartItemsCount}) => {
                               </p>
                             </div>
                             <div className="col-lg-4 col-md-6">
-                              <div
-                                className="d-flex mb-4"
-                                style={{ maxWidth: "300px" }}>
-                                <button
-                                  className="btn px-3"
-                                  onClick={() => {
-                                    removeItem(item);
-                                  }}>
-                                  <i className="fas fa-minus"></i>
-                                </button>
-                                <h5 style={{ margin: 0, paddingTop: 5 }}>{item.qty}</h5>
-                                <button
-                                  className="btn px-3"
-                                  onClick={() => {
-                                    addItem(item);
-                                  }}>
-                                  <i className="fas fa-plus"></i>
-                                </button>
-                              </div>
+                              <Box
+                              sx={{display:'flex', maxWidth:"300px"}}
+                              mb={2}
+                                >
+                                <Stack direction='row'>
+                                  <IconButton className="btn px-3" onClick={() => {
+                                      removeItem(item);
+                                    }}>
+                                  <RemoveIcon />
+                                  </IconButton>
+                                  <h5 style={{ margin: 0, paddingTop: 5 }}>{item.qty}</h5>
+                                  <IconButton className="btn px-3"
+                                    onClick={() => {
+                                      addItem(item);
+                                    }}>
+                                      <AddIcon />
+                                    </IconButton>
+                                </Stack>
+                              
+                              </Box>
                               <p className="text-start text-md-center">
                                 <strong>
                                   <span className="text-muted">{item.qty}</span>{" "}
@@ -114,49 +164,20 @@ const Cart = ( {setCartItemsCount}) => {
                       );
                     })}
                     <Typography textAlign='center' margin="1rem 0">Subtotal = <span style={{color: 'red', fontWeight: '600'}}>${Math.round(subtotal)}</span></Typography>
-                      <Button
+                      <Stack direction='row' justifyContent='space-around'>
+                      <StyledButton
                       component={Link}
                       to="/checkout"
-                      fullWidth={true}
-                      sx={{ background: '#00a524', color: '#fff' }}
                     >
                       Go to checkout
-                    </Button>
+                    </StyledButton>
+                    <Button component={Link} to='/product' size='normal' sx={{ backgroundColor:'#0d6efd', color: '#fff', fontFamily: 'unset'}}>
+            <ArrowBackIcon /> Continue Shopping
+          </Button>
+                      </Stack>
                   </div>
                 </div>
               </div>
-              {/* <div className="col-md-4">
-                <div className="card mb-4">
-                  <div className="card-header py-3 bg-light">
-                    <h5 className="mb-0">Order Summary</h5>
-                  </div>
-                  <div className="card-body">
-                    <ul className="list-group list-group-flush">
-                      <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                        Products ({totalItems})<span>${Math.round(subtotal)}</span>
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center px-0">
-                        Shipping
-                        <span>${shipping}</span>
-                      </li>
-                      <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
-                        <div>
-                          <strong>Total amount</strong>
-                        </div>
-                        <span>
-                          <strong>${Math.round(subtotal + shipping)}</strong>
-                        </span>
-                      </li>
-                    </ul>
-                    <Link
-                      to="/checkout"
-                      className="btn btn-dark btn-lg btn-block"
-                    >
-                      Go to checkout
-                    </Link>
-                  </div>
-                </div>
-              </div> */}
             </div>
           </div>
         </section>

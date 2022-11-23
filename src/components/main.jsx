@@ -58,7 +58,7 @@ const Home = () => {
               alt="Card"
               height={500}
               width="100%"
-              style={{objectFit: 'contain'}}
+              style={{objectFit: 'cover'}}
             />
             {/* </div> */}
           </SwiperSlide>
