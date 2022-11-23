@@ -19,11 +19,11 @@ const Cart = ( {setCartItemsCount}) => {
     return (
       <Card sx={{ minWidth: 275}} elevation = {0}>
         <CardContent sx={{ padding: 0 }}>
-          <Typography variant="h4" gutterBottom>
+          <Typography variant="h6" gutterBottom>
             Your Cart is Empty
           </Typography>
-          <CardActions>
-          <Button size='normal' sx={{ backgroundColor:'#0d6efd', color: '#fff', fontFamily: 'monospace' }}>
+          <CardActions sx={{padding: 0 }}>
+          <Button component={Link} to='/product' size='normal' sx={{ backgroundColor:'#0d6efd', color: '#fff', fontFamily: 'monospace'}}>
             <ArrowBackIcon /> Continue Shopping
           </Button>
           </CardActions>
@@ -166,22 +166,22 @@ const Cart = ( {setCartItemsCount}) => {
 
   return (
     <>
-    {!authToken ? 
+    {/* {!authToken ? 
       <>
       <Box p={5}>
         <ProductionQuantityLimitsIcon sx={{fontSize: "8rem"}} />
       </Box>
       </>
-      :
-      <>
+      : */}
+      {/* <> */}
       <div className="container my-3">
         {/* <button onClick={handleClick}>Close</button> */}
         {/* <Typography variant="h4" textAlign='center' fontFamily="monospace" fontWeight={400}>Cart</Typography>
         <hr /> */}
         {state.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>
-      </>
-    }
+      {/* </> */}
+    {/* // } */}
       
     </>
   );
