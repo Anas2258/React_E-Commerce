@@ -8,13 +8,29 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
 
 import Breadcrumbs from "@mui/material/Breadcrumbs";
-import { Button, Box, Typography, Stack, Grid, Divider } from "@mui/material";
+import {
+  Button,
+  Box,
+  Typography,
+  Stack,
+  Grid,
+  Divider,
+  Container,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Chip from "@mui/material/Chip";
-import { Container, padding, textTransform, width } from "@mui/system";
+// import { Container, padding, textTransform, width } from "@mui/system";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
+
+
+
 
 const Products = () => {
   const [data, setData] = useState([]);
@@ -78,78 +94,47 @@ const Products = () => {
     const updatedList = data.filter((item) => item.category === cat);
     setFilter(updatedList);
   };
+
+  const ToggleCustomized = styled(ToggleButton)(({ theme }) => ({
+    selected: {
+      "&&": {
+        backgroundColor: "#000",
+        color: "red"
+      }
+    }
+  }))
+
   const ShowProducts = () => {
+    const [alignment, setAlignment] = useState("test");
+
+    const handleAlignment = (event, newAlignment) => {
+      setAlignment(newAlignment);
+    };
     return (
       <>
         <Grid item xs={12} sx={{ marginBottom: 5 }}>
-          <Breadcrumbs
-            aria-label="breadcrumb"
-            sx={{
-              display: "flex",
-              color: "#000",
-              borderRadius: "5px",
-              padding: 0,
-              flexDirection: { xs: "column", md: "row" },
-            }}
-          >
-            <Chip
-              label="All"
-              style={{
-                backgroundColor: "#0d6dfd",
-                color: "#fff",
-                fontSize: "1rem",
-                fontFamily: "monospace",
-                margin: 5,
-              }}
-              onClick={() => setFilter(data)}
-            />
-            <Chip
-              label="Men's Clothing"
-              style={{
-                backgroundColor: "#0d6dfd",
-                color: "#fff",
-                fontSize: "1rem",
-                fontFamily: "monospace",
-                margin: 5,
-              }}
-              onClick={() => filterProduct("men's clothing")}
-            />
-            <Chip
-              label="Women's Clothing"
-              style={{
-                backgroundColor: "#0d6dfd",
-                color: "#fff",
-                fontSize: "1rem",
-                fontFamily: "monospace",
-                margin: 5,
-              }}
-              onClick={() => filterProduct("women's clothing")}
-            />
-            {/* Women's Clothing
-          </Chip> */}
-            <Chip
-              label="Jewellary"
-              style={{
-                backgroundColor: "#0d6dfd",
-                color: "#fff",
-                fontSize: "1rem",
-                fontFamily: "monospace",
-                margin: 5,
-              }}
-              onClick={() => filterProduct("jewelery")}
-            />
-            <Chip
-              label="Electronics"
-              style={{
-                backgroundColor: "#0d6dfd",
-                color: "#fff",
-                fontSize: "1rem",
-                fontFamily: "monospace",
-                margin: 5,
-              }}
-              onClick={() => filterProduct("electronics")}
-            />
-          </Breadcrumbs>
+        {/* <ToggleButtonGroup
+      value={alignment}
+      exclusive
+      onChange={handleAlignment}
+      aria-label="text alignment"
+    >
+      <ToggleCustomized onClick={() => setFilter(data)} value="left" aria-label="left aligned">
+  TEst
+      </ToggleCustomized>
+      <ToggleCustomized onClick={() => filterProduct("men's clothing")} value="center" aria-label="centered">
+      TEst
+      </ToggleCustomized>
+      <ToggleCustomized onClick={() => filterProduct("women's clothing")} value="right" aria-label="right aligned">
+    TEst
+      </ToggleCustomized>
+      <ToggleCustomized onClick={() => filterProduct("jewelery")} value="justify" aria-label="justified">
+        TEst
+      </ToggleCustomized>
+      <ToggleCustomized onClick={() => filterProduct("electronics")} value="justify" aria-label="justified">
+        TEst
+      </ToggleCustomized>
+    </ToggleButtonGroup> */}
         </Grid>
         {filter.map((product) => {
           return (
@@ -163,56 +148,67 @@ const Products = () => {
                   sx={{ objectFit: "contain", padding: "1.5rem" }}
                 />
                 <Divider sx={{ opacity: "1" }} />
-                <CardContent >
-                  <Stack direction ='column'>
-                  <Typography variant="body1" align="left">
-                    $ {product.price}
-                  </Typography>
-                  <Typography variant="h6" fontSize="large">
-                    {product.title.substring(0, 35)}...
-                  </Typography>
-                  {/* <Typography variant="body2" fontSize="large">
+                <CardContent>
+                  <Stack direction="column" sx={{ position: "relative" }}>
+                    <Typography variant="body1" align="left">
+                      $ {product.price}
+                    </Typography>
+                    <Typography
+                      variant="h6"
+                      fontSize="large"
+                      sx={{ color: "#51585e" }}
+                    >
+                      {product.title.substring(0, 45)}...
+                    </Typography>
+                    {/* <Typography variant="body2" fontSize="large">
                     {product.description.substring(0, 45)}...
-                  </Typography> */}
-                  <Stack direction="row" spacing={2}>
-                    <Button
-                    variant="contained"
-                    fullWidth= "true"
-                    size='small'
-                      // sx={{
-                      //   backgroundColor: "#0d6efd",
-                      //   color: "#fff",
-                      //   borderColor: "0d6efd",
-                      //   fontSize: '0.5rem',
-                      //   textTransform: 'none',
-                      // }}
-                      onClick={() => {
-                        window.scrollTo({
-                          top: 0,
-                          left: 0,
-                          behavior: "smooth",
-                        });
-                        addProduct(product);
-                      }}
+                    </Typography> */}
+                    <Stack
+                      sx={{ position: "absolute", top: "6.5rem" }}
+                      direction="row"
+                      spacing={2}
                     >
-                      Add to Cart
-                    </Button>
-                    <Button
-                      variant="contained"
-                      fullWidth= "true"
-                      size="small"
-                      // sx={{
-                      //   backgroundColor: "#0d6efd",
-                      //   color: "#fff",
-                      //   borderColor: "0d6efd",
-                      //   textTransform: 'none'
-                      // }}
-                      component={Link}
-                      to={"/product/" + product.id}
-                    >
-                      Buy Now
-                    </Button>
-                  </Stack>
+                      <Button
+                        variant="contained"
+                        // fullWidth="true"
+                        size="small"
+                        sx={{
+                          fontWeight: 500,
+                          backgroundColor: "#0d6efd",
+                          textAlign: "center",
+                          textTransform: "capitalize",
+                          borderRadius: "10px",
+                          minWidth: "6.5rem",
+                          padding: "0.5rem 1rem",
+                        }}
+                        onClick={() => {
+                          window.scrollTo({
+                            top: 0,
+                            left: 0,
+                            behavior: "smooth",
+                          });
+                          addProduct(product);
+                        }}
+                      >
+                        <AddShoppingCartIcon /> Add to Cart
+                      </Button>
+                      <Button
+                        variant="contained"
+                        // fullWidth="true"
+                        size="small"
+                        sx={{
+                          borderRadius: "10px",
+                          textAlign: "center",
+                          textTransform: "capitalize",
+                          minWidth: "5rem",
+                          color: "#fff",
+                        }}
+                        component={Link}
+                        to={"/product/" + product.id}
+                      >
+                        <LocalMallIcon /> Buy Now
+                      </Button>
+                    </Stack>
                   </Stack>
                 </CardContent>
               </Card>
@@ -257,7 +253,7 @@ const Products = () => {
   };
   return (
     <>
-      <Container gutterBottom sx={{ marginTop: "2rem" }}>
+      <Container sx={{ marginTop: "2rem" }}>
         <div className="row">
           {/* <div className="col-12"> */}
           <Typography variant="h4" gutterBottom>

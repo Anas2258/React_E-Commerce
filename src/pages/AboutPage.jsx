@@ -1,9 +1,18 @@
 import React from 'react'
 import { Footer, Navbar } from "../components";
+import Login from './Login';
+
 const AboutPage = () => {
+  const authToken = localStorage.getItem('token')
+
   return (
     <>
-      <Navbar />
+    {!authToken
+      ?
+      <Login />
+      :
+      <>
+        <Navbar />
       <div className="container my-3 py-3">
         <h1 className="text-center">About Us</h1>
         <hr />
@@ -60,6 +69,8 @@ const AboutPage = () => {
         </div>
       </div>
       <Footer />
+      </>
+    }
     </>
   )
 }

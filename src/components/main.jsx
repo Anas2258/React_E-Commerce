@@ -24,17 +24,19 @@ const Home = () => {
   return (
     <>
       {/* <div className="hero border-1 pb-3"> */}
-      <Swiper z-index = "999" style={{ maxHeight: "28rem" }} pagination={{ clickable: true }}
+      <Swiper style={{maxHeight: 500}} pagination={{ clickable: true }}
       scrollbar={{ draggable: true }} mousewheel={true} navigation={true} modules={[Navigation]} autoHeight={true} className="mySwiper">
         <SwiperSlide >
-          <div className="card bg-dark text-white border-0 ">
+          {/* <div className="card bg-dark text-white border-0 "> */}
             <img
-              className="card-img img-fluid"
-              src="./assets/main.png.jpg"
+              // className="card-img img-fluid"
+              src="./assets/Group_6177.png"
               alt="Card"
+              width="100%"
               height={500}
+              style={{objectFit: 'cover'}}
             />
-            <div className="card-img-overlay d-flex align-items-center">
+            {/* <div className="card-img-overlay d-flex align-items-center">
               <div className="container">
                 <h5 className="card-title fs-1 text fw-lighter">
                   New Season Arrivals
@@ -45,16 +47,29 @@ const Home = () => {
                   longer.
                 </p>
               </div>
-            </div>
-          </div>
+            </div> */}
+          {/* </div> */}
           </SwiperSlide>
           <SwiperSlide>
           {/* <div className="card bg-dark text-white border-0 "> */}
             <img
-              className="card-img img-fluid"
-              src="./assets/photo.avif"
+              // className="card-img img-fluid"
+              src="./assets/image_146.png"
               alt="Card"
-              // height={500}
+              height={500}
+              width="100%"
+              style={{objectFit: 'contain'}}
+            />
+            {/* </div> */}
+          </SwiperSlide>
+          <SwiperSlide>
+          {/* <div className="card bg-dark text-white border-0 "> */}
+            <img
+              // className="card-img img-fluid"
+              src="./assets/image_147.png"
+              alt="Card"
+              height={500}
+              width="100%"
               style={{objectFit: 'cover'}}
             />
             {/* </div> */}

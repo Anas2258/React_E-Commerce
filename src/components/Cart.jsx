@@ -7,37 +7,23 @@ import { Link } from "react-router-dom";
 import Box from '@mui/material/Box';
 import { Card, CardActions, CardContent, Typography, Button } from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Cart = ( {setCartItemsCount}) => {
   const state = useSelector((state) => state.handleCart);
+  const authToken = localStorage.getItem('token')
   const dispatch = useDispatch();
-
-  // const handleClick = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  //   setOpen((previousOpen) => !previousOpen);
-  // };
 
   const EmptyCart = () => {
     return (
-        // <div className="container">
-        //   <div className="row">
-        //     <div className="col-md-12 py-5 bg-light text-center">
-        //       <h4 className="p-3 display-5">Your Cart is Empty</h4>
-        //       <Link to="/product" className="btn  btn-outline-dark mx-4">
-        //         <i className="fa fa-arrow-left"></i> Continue Shopping
-        //       </Link>
-        //     </div>
-        //   </div>
-        // </div>
-      <Card sx={{ minWidth: 275, padding: '1.5rem'}} elevation = {15}>
-        <CardContent>
-          {/* <ShoppingCartIcon /> */}
+      <Card sx={{ minWidth: 275}} elevation = {0}>
+        <CardContent sx={{ padding: 0 }}>
           <Typography variant="h4" gutterBottom>
             Your Cart is Empty
           </Typography>
           <CardActions>
-          <Button size='normal' sx={{ backgroundColor:'#eeeeee', color: '#000', fontFamily: 'monospace' }}>
+          <Button size='normal' sx={{ backgroundColor:'#0d6efd', color: '#fff', fontFamily: 'monospace' }}>
             <ArrowBackIcon /> Continue Shopping
           </Button>
           </CardActions>
@@ -63,8 +49,6 @@ const Cart = ( {setCartItemsCount}) => {
 
     setCartItemsCount(state.length)
     state.map((item) => {
-      // console.log(item, 'item')
-      // setCartItemsCount(item)
       return (totalItems += item.qty);
     });
     return (
@@ -74,9 +58,6 @@ const Cart = ( {setCartItemsCount}) => {
             <div className="row d-flex justify-content-center my-4" >
               <div className="col-md-12" >
                 <div className="card mb-4" >
-                  {/* <div className="card-header py-3">
-                    <h5 className="mb-0">Item List</h5>
-                  </div> */}
                   <div className="card-body">
                     {state.map((item) => {
                       return (
@@ -185,13 +166,23 @@ const Cart = ( {setCartItemsCount}) => {
 
   return (
     <>
+    {!authToken ? 
+      <>
+      <Box p={5}>
+        <ProductionQuantityLimitsIcon sx={{fontSize: "8rem"}} />
+      </Box>
+      </>
+      :
+      <>
       <div className="container my-3">
         {/* <button onClick={handleClick}>Close</button> */}
         {/* <Typography variant="h4" textAlign='center' fontFamily="monospace" fontWeight={400}>Cart</Typography>
         <hr /> */}
         {state.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>
-      {/* <Footer /> */}
+      </>
+    }
+      
     </>
   );
 };

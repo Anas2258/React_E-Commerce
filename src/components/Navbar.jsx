@@ -26,7 +26,7 @@ import IconButton from "@mui/material/IconButton";
 import LogoDevIcon from "@mui/icons-material/LogoDev";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { color } from "@mui/system";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const Navbar = () => {
   const [open, setOpen] = React.useState(false);
@@ -39,6 +39,7 @@ const Navbar = () => {
   const [cartItemsCount, setCartItemsCount] = useState(0)
 
   const state = useSelector((state) => state.handleCart);
+  const authToken = localStorage.getItem('token')
 
   const handleMouseEnter = () => {
     setIsHovering(true);
@@ -63,6 +64,7 @@ const Navbar = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  console.log(cartItemsCount)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -314,7 +316,10 @@ const Navbar = () => {
               >
                 {/* <DrawerHeader> */}
                 <Box sx={{ display : 'flex', justifyContent: 'space-between', padding: '1rem 1rem' }}>
-                  <Typography variant='h6' fontWeight={700}>Your Cart ({ cartItemsCount ? cartItemsCount : 0})</Typography>
+                  <Typography 
+                    variant='h6' 
+                    fontWeight={700}>{cartItemsCount > 0 ?  `Your Cart (${state.length})` : "Add Items to Cart"  }
+                  </Typography>
                   <IconButton 
                     onClick={handleDrawerClose} 
                     sx=
@@ -328,9 +333,6 @@ const Navbar = () => {
                       <CloseIcon fontSize="large" />
                   </IconButton>
                 </Box>
-                  
-                {/* </DrawerHeader> */}
-                {/* <Divider /> */}
                 <Box
                         sx={{
                           borderRadius: 5,
@@ -342,31 +344,6 @@ const Navbar = () => {
                         <Cart  setCartItemsCount={setCartItemsCount} />
                       </Box>
               </Drawer>
-              {/* <Popper id={id} open={open} anchorEl={anchorEl} transition>
-                {({ TransitionProps }) => (
-                  <Fade {...TransitionProps} timeout={350}>
-                    <Slide
-                      {...TransitionProps}
-                      direction="down"
-                      timeout={350}
-                      in={anchorEl}
-                      mountOnEnter
-                      unmountOnExit
-                    >
-                      <Box
-                        sx={{
-                          borderRadius: 5,
-                          p: 1,
-                          bgcolor: "background.paper",
-                          border: "1px solid #000",
-                        }}
-                      >
-                        <Cart />
-                      </Box>
-                    </Slide>
-                  </Fade>
-                )}
-              </Popper> */}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -392,12 +369,15 @@ const Navbar = () => {
                 onClose={handleCloseUserMenu}
               >
                 <MenuItem>
-                  <NavLink
-                    to="/login"
-                    style={{ color: "#000", textDecoration: "none" }}
+                  <Button
+                    component={Link}
+                    to={authToken ? "/" : "/login"}
+                    onClick = {() => localStorage.removeItem('token')}
+                    sx ={{ color: "#dc3545", padding: 0, textTransform: 'capitalize' }}
                   >
-                    <i className="fa fa-sign-in-alt mr-1"></i> Login
-                  </NavLink>
+                    <LogoutIcon /> 
+                    <Typography variant="body1" sx={{ marginLeft: '5px' }}>{authToken ? "Logout" : "Login" }</Typography> 
+                  </Button>
                 </MenuItem>
                 <MenuItem>
                   <NavLink
