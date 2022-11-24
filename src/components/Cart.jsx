@@ -4,30 +4,38 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCart, delCart } from "../redux/action";
 import { Link } from "react-router-dom";
 
-import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import { Card, CardActions, CardContent, Typography, Button, IconButton, Stack, CardMedia } from "@mui/material";
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import RemoveIcon from '@mui/icons-material/Remove';
-import AddIcon from '@mui/icons-material/Add';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+  Button,
+  IconButton,
+  Stack,
+  CardMedia,
+} from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import ProductionQuantityLimitsIcon from "@mui/icons-material/ProductionQuantityLimits";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
-
 const StyledButton = styled(Button)(({ theme }) => ({
-  backgroundColor: '#ff8100', 
-  fontFamily:'unset',
-  color: "#fff", 
-  fontWeight:400,
-  '&:hover': {
-    backgroundColor: '#ff8100',
-    color:'#fff'
- },
-}))
+  backgroundColor: "#ff8100",
+  fontFamily: "unset",
+  color: "#fff",
+  fontWeight: 400,
+  "&:hover": {
+    backgroundColor: "#ff8100",
+    color: "#fff",
+  },
+}));
 
-const Cart = ( {setCartItemsCount}) => {
+const Cart = ({ setCartItemsCount }) => {
   const state = useSelector((state) => state.handleCart);
-  const authToken = localStorage.getItem('token')
+  const authToken = localStorage.getItem("token");
   const dispatch = useDispatch();
 
   const EmptyCart = () => {
@@ -96,17 +104,17 @@ const Cart = ( {setCartItemsCount}) => {
       return (subtotal += item.price * item.qty);
     });
 
-    setCartItemsCount(state.length)
+    setCartItemsCount(state.length);
     state.map((item) => {
       return (totalItems += item.qty);
     });
     return (
       <>
         <section className="h-100 gradient-custom">
-          <div className="container" >
-            <div className="row d-flex justify-content-center my-4" >
-              <div className="col-md-12" >
-                <div className="card mb-4" >
+          <div className="container">
+            <div className="row d-flex justify-content-center my-4">
+              <div className="col-md-12">
+                <div className="card mb-4">
                   <div className="card-body">
                     {state.map((item) => {
                       return (
@@ -115,7 +123,8 @@ const Cart = ( {setCartItemsCount}) => {
                             <div className="col-lg-3 col-md-12">
                               <div
                                 className="bg-image rounded"
-                                data-mdb-ripple-color="light">
+                                data-mdb-ripple-color="light"
+                              >
                                 <img
                                   src={item.image}
                                   // className="w-100"
@@ -126,35 +135,39 @@ const Cart = ( {setCartItemsCount}) => {
                               </div>
                             </div>
                             <div className="col-lg-5 col-md-6">
-                              <p>
-                                {item.title.substring(0, 32)}...
-                              </p>
+                              <p>{item.title.substring(0, 32)}...</p>
                             </div>
                             <div className="col-lg-4 col-md-6">
                               <Box
-                              sx={{display:'flex', maxWidth:"300px"}}
-                              mb={2}
-                                >
-                                <Stack direction='row'>
-                                  <IconButton className="btn px-3" onClick={() => {
+                                sx={{ display: "flex", maxWidth: "300px" }}
+                                mb={2}
+                              >
+                                <Stack direction="row">
+                                  <IconButton
+                                    className="btn px-3"
+                                    onClick={() => {
                                       removeItem(item);
-                                    }}>
-                                  <RemoveIcon />
+                                    }}
+                                  >
+                                    <RemoveIcon />
                                   </IconButton>
-                                  <h5 style={{ margin: 0, paddingTop: 5 }}>{item.qty}</h5>
-                                  <IconButton className="btn px-3"
+                                  <h5 style={{ margin: 0, paddingTop: 5 }}>
+                                    {item.qty}
+                                  </h5>
+                                  <IconButton
+                                    className="btn px-3"
                                     onClick={() => {
                                       addItem(item);
-                                    }}>
-                                      <AddIcon />
-                                    </IconButton>
+                                    }}
+                                  >
+                                    <AddIcon />
+                                  </IconButton>
                                 </Stack>
-                              
                               </Box>
                               <p className="text-start text-md-center">
                                 <strong>
                                   <span className="text-muted">{item.qty}</span>{" "}
-                                  x ${item.price} 
+                                  x ${item.price}
                                 </strong>
                               </p>
                             </div>
@@ -163,18 +176,38 @@ const Cart = ( {setCartItemsCount}) => {
                         </div>
                       );
                     })}
-                    <Typography textAlign='center' margin="1rem 0">Subtotal = <span style={{color: 'red', fontWeight: '600'}}>${Math.round(subtotal)}</span></Typography>
-                      <Stack direction='row' justifyContent='space-around'>
-                      <StyledButton
-                      component={Link}
-                      to="/checkout"
-                    >
-                      Go to checkout
-                    </StyledButton>
-                    <Button component={Link} to='/product' size='normal' sx={{ backgroundColor:'#0d6efd', color: '#fff', fontFamily: 'unset'}}>
-            <ArrowBackIcon /> Continue Shopping
-          </Button>
-                      </Stack>
+                    <Typography textAlign="center" margin="1rem 0">
+                      Subtotal ={" "}
+                      <span style={{ color: "red", fontWeight: "600" }}>
+                        ${Math.round(subtotal)}
+                      </span>
+                    </Typography>
+                    <Stack direction={{xs:'column', md: 'row'}} sx={{marginBottom: '20px'}} justifyContent="space-around">
+                      <StyledButton component={Link} to="/checkout">
+                        Go to checkout
+                      </StyledButton>
+                      <Button
+                        component={Link}
+                        to="/product"
+                        // size="normal"
+                        sx={{
+                          backgroundColor: "#0d6efd",
+                          color: "#fff",
+                          fontFamily: "unset",
+                          // width: {xs: '320px', md: '50px'}
+                        }}
+                      >
+                        <ArrowBackIcon /> Continue Shopping
+                      </Button>
+                    </Stack>
+                    <Box sx={{display:'flex', justifyContent: 'center'}}>
+                    <img 
+                      src="./assets/image-asset.jpeg"
+                      alt="card"
+                      height={40}
+                      mt={5}
+                      />
+                    </Box>
                   </div>
                 </div>
               </div>
@@ -187,7 +220,7 @@ const Cart = ( {setCartItemsCount}) => {
 
   return (
     <>
-    {/* {!authToken ? 
+      {/* {!authToken ? 
       <>
       <Box p={5}>
         <ProductionQuantityLimitsIcon sx={{fontSize: "8rem"}} />
@@ -202,8 +235,7 @@ const Cart = ( {setCartItemsCount}) => {
         {state.length > 0 ? <ShowCart /> : <EmptyCart />}
       </div>
       {/* </> */}
-    {/* // } */}
-      
+      {/* // } */}
     </>
   );
 };

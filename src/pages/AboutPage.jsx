@@ -2,6 +2,8 @@ import React from 'react'
 import { Footer, Navbar } from "../components";
 import Login from './Login';
 
+import { Container } from '@mui/system';
+
 const AboutPage = () => {
   const authToken = localStorage.getItem('token')
 
@@ -13,7 +15,7 @@ const AboutPage = () => {
       :
       <>
         <Navbar />
-      <div className="container my-3 py-3">
+      <Container maxWidth="md">
         <h1 className="text-center">About Us</h1>
         <hr />
         <p className="lead text-center">
@@ -67,7 +69,7 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
       <Footer />
       </>
     }
