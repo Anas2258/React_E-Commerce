@@ -48,6 +48,7 @@ const Products = () => {
     const getProducts = async () => {
       setLoading(true);
       const response = await fetch("https://fakestoreapi.com/products/");
+      console.log(response, 'response')
       if (componentMounted) {
         setData(await response.clone().json());
         setFilter(await response.json());
